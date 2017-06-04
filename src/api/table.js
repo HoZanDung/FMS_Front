@@ -19,31 +19,22 @@ export function list() {
   })
 }
 
-//根据id查询数据
-export function get(params) {
+//删除ID为id的文件
+export function deleteById(id) {
   return fetch({
-    url: port_table.get,
-    method: 'get',
-    params
-  })
+    url: port_table.delete + "/" + id,
+    method: 'delete'
+  });
 }
 
-//根据id删除数据
-export function del(data) {
+//恢复ID为id的文件
+export function recoveryById(id) {
   return fetch({
-    url: port_table.del,
-    method: 'post',
-    data
-  })
+    url: port_table.recovery + "/" + id,
+    method: 'put'
+  });
 }
-//添加或修改数据
-export function save(data) {
-  return fetch({
-    url: port_table.save,
-    method: 'post',
-    data
-  })
-}
+
 //批量删除
 export function batch_del(data) {
   return fetch({
