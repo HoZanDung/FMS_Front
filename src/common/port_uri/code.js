@@ -11,9 +11,8 @@
  *
  */
 
-//成功
-exports.success = 0
-//错误
-exports.error = 1
-//未登录
-exports.unlogin = 2
+
+//
+exports.unauthorized = 401
+
+exports.invalid_grant = 400

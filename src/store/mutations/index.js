@@ -8,17 +8,28 @@
  * @Copyright(©) 2017 by zzmhot.
  *
  */
-import * as type from 'store/mutations/type'
-import {cookieStorage} from 'common/storage'
+import * as type from './type.js'
+import {sessionStorage} from '../../common/storage/index.js'
+
 
 export default {
   //设置用户信息和是否登录
   [type.SET_USER_INFO](state, userinfo){
-    state.user_info = userinfo || {}
+    state.User = userinfo || {}
     if (userinfo === null) {
-      cookieStorage.remove('user_info')
+      sessionStorage.remove('user_info')
     } else {
-      cookieStorage.set('user_info', userinfo)
+      sessionStorage.set('user_info', userinfo)
+    }
+  },
+  //设置token
+  [type.SET_TOKEN_INFO](state, tokeninfo){
+    state.Token = tokeninfo || {};
+    if (tokeninfo === null) {
+      sessionStorage.remove('token_info')
+    } else {
+      sessionStorage.set('token_info', tokeninfo)
+      console.log(tokeninfo)
     }
   }
 }

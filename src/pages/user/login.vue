@@ -26,7 +26,7 @@
 <script type="text/javascript">
   import {mapActions} from 'vuex'
   import {port_user, port_code} from 'common/port_uri'
-  import {SET_USER_INFO} from 'store/actions/type'
+  import {SET_USER_INFO, SET_TOKEN_INFO} from 'store/actions/type'
 
   export default{
     data(){
@@ -45,6 +45,7 @@
     },
     methods: {
       ...mapActions({
+        set_token_info: SET_TOKEN_INFO,
         set_user_info: SET_USER_INFO
       }),
       //提交
@@ -54,24 +55,46 @@
           this.load_data = true
           //登录提交
           this.$fetch.api_user.login(this.form)
-            .then(({data, msg}) => {
-              this.set_user_info({
-                user: data,
-                login: true
-              })
-              this.$message.success(msg)
-              setTimeout(this.$router.push({path: '/'}), 500)
+            .then(({data}) => {
+              if (data['access_token']) {
+                console.log(data)
+                this.set_token_info(data);
+                this.$fetch.api_user.me()
+                  .then(({data}) => {
+                    this.set_user_info(data)
+                      .then(
+                        () => {
+                          this.$notify({
+                            title: '登录成功',
+                            message: '欢迎 ' + data.realname,
+                            type: 'success'
+                          });
+                          setTimeout(this.$router.push({path: '/'}), 500);
+                        },
+                        () => {
+                          this.load_data = false;
+                          this.set_token_info(null);
+                          this.$notify.error({
+                            title: '错误',
+                            message: data.realname + ',你无权到后台'
+                          });
+                        })
+                  })
+              }
             })
             .catch(({code}) => {
               this.load_data = false
-              if (code === port_code.error) {
-                this.$notify.info({
-                  title: '温馨提示',
-                  message: '账号和密码都为：admin'
-                })
+              if (code === port_code.unauthorized || code === port_code.invalid_grant) {
+                this.$notify.error({
+                  title: '登录失败',
+                  message: '账号和密码错误'
+                });
               }
-            })
-        })
+            });
+        });
+      },
+      resetForm(form) {
+        this.form.resetFields();
       }
     }
   }

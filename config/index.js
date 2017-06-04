@@ -25,10 +25,21 @@ module.exports = {
     env: require('./dev.env'),
     port: 3000,
     //是否自动打开浏览器
-    autoOpenBrowser: false,
+    autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        //mock数据
+        // target: 'http://apizza.cc',
+        //本地8080
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/'
+        }
+      }
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

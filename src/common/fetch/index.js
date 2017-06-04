@@ -13,7 +13,7 @@ import axios from 'axios'
 import {port_code} from 'common/port_uri'
 import router from 'src/router'
 import {Message} from 'element-ui'
-import store from 'store'
+import store from '../../store/index.js'
 import {SET_USER_INFO} from 'store/actions/type'
 import {server_base_url} from 'common/config'
 
@@ -34,23 +34,38 @@ export default function fetch(options) {
       timeout: 2000,
       //设置请求时的header
       headers: {
-        'Github-url': 'https://github.com/zzmhot/vue-admin',
-        'X-Powered-By': 'zzmhot'
+        // 'Github-url': 'https://github.com/zzmhot/vue-admin',
+        // 'X-Powered-By': 'zzmhot'
       }
     })
+
+    instance.interceptors.request.use(
+      config => {
+        let token = store.state.Token;
+        if (token) {
+          config.headers.Authorization = token['token_type'] + ' ' + token['access_token'];
+        }
+        return config;
+      },
+      err => {
+        return Promise.reject(err);
+      }
+    );
+
     //请求处理
     instance(options)
-      .then(({data: {code, msg, data}}) => {
-        //请求成功时,根据业务判断状态
-        if (code === port_code.success) {
-          resolve({code, msg, data})
-          return false
-        } else if (code === port_code.unlogin) {
-          setUserInfo(null)
-          router.replace({name: "login"})
-        }
-        Message.warning(msg)
-        reject({code, msg, data})
+      .then(data => {
+      //   //请求成功时,根据业务判断状态
+      //   if (code === port_code.success) {
+      //     resolve({code, msg, data})
+      //     return false
+      //   } else if (code === port_code.unlogin) {
+      //     setUserInfo(null)
+      //     router.replace({name: "login"})
+      //   }
+      //   Message.warning(msg)
+      //   reject({code, msg, data})
+        resolve(data)
       })
       .catch((error) => {
         //请求失败时,根据业务判断状态
@@ -58,8 +73,12 @@ export default function fetch(options) {
           let resError = error.response
           let resCode = resError.status
           let resMsg = error.message
-          Message.error('操作失败！错误原因 ' + resMsg)
-          reject({code: resCode, msg: resMsg})
+          reject({
+            code: resCode,
+            data: resData,
+          })
+          // Message.error('操作失败！错误原因 ' + resMsg)
+          // reject({code: resCode, msg: resMsg})
         }
       })
   })

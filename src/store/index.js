@@ -15,10 +15,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 //引入模块
-import actions from './actions'
-import getters from './getters'
-import mutations from './mutations'
-import state from './states'
+import actions from './actions/index.js'
+import getters from './getters/index.js'
+import mutations from './mutations/index.js'
+import state from './states/index.js'
 
 Vue.use(Vuex)
 

@@ -23,48 +23,65 @@
         <el-table-column
           prop="id"
           label="id"
+          width="50">
+        </el-table-column>
+        <el-table-column
+          prop="username"
+          label="姓名"
           width="80">
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="姓名"
-          width="120">
+          prop="password"
+          label="密码"
+          width="80">
         </el-table-column>
         <el-table-column
-          prop="sex"
-          label="性别"
-          width="100">
+          prop="roles"
+          label="权限"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          label="状态"
+          width="80">
+        </el-table-column>
+        <el-table-column type="expand">
           <template scope="props">
-            <span v-text="props.row.sex == 1 ? '男' : '女'"></span>
+            <el-form label-position="left" inline class="table-expand">
+              <el-form-item label="真实姓名:">
+                <span>{{props.row.realname}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="邮箱:">
+                <span>{{props.row.email}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="手机号码:">
+                <span>{{props.row.phone}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="地址:">
+                <span>{{props.row.address}}</span>
+              </el-form-item>
+            </el-form>
           </template>
         </el-table-column>
         <el-table-column
-          prop="age"
-          label="年龄"
-          width="100">
-        </el-table-column>
-        <el-table-column
-          prop="birthday"
-          label="生日"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="zip"
-          label="邮编"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址">
-        </el-table-column>
-        <el-table-column
           label="操作"
-          width="180">
+          width="250">
           <template scope="props">
-            <router-link :to="{name: 'tableUpdate', params: {id: props.row.id}}" tag="span">
+            <router-link :to="{name: 'userTableModify', params: {
+                id: props.row.id,
+                username:props.row.username,
+                password:props.row.password,
+                realname:props.row.realname,
+                email:props.row.email,
+                phone:props.row.phone,
+                address:props.row.address}}" tag="span">
               <el-button type="info" size="small" icon="edit">修改</el-button>
             </router-link>
             <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row)">删除</el-button>
+            <el-button type="success" size="small" icon="delete" @click="recovery_data(props.row)">恢复</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -103,7 +120,7 @@
         //数据总条目
         total: 0,
         //每页显示多少条数据
-        length: 15,
+        size: 15,
         //请求时的loading效果
         load_data: true,
         //批量选择数组
@@ -125,14 +142,19 @@
       //获取数据
       get_table_data(){
         this.load_data = true
-        this.$fetch.api_table.list({
+        this.$fetch.api_user.list({
           page: this.currentPage,
-          length: this.length
+          size: this.size
         })
-          .then(({data: {result, page, total}}) => {
-            this.table_data = result
-            this.currentPage = page
-            this.total = total
+          .then(({data: {data, metadata}}) => {
+            var newData = []
+            for(var item of data){
+                item.roles = item.roles[0].description
+                newData.push(item)
+            }
+            this.table_data = newData
+            this.currentPage = metadata.pageInfo.CurrentPage
+            this.total = metadata.pageInfo.TotalPages
             this.load_data = false
           })
           .catch(() => {
@@ -147,11 +169,33 @@
           type: 'warning'
         })
           .then(() => {
-            this.load_data = true
-            this.$fetch.api_table.del(item)
-              .then(({msg}) => {
+            let uid = item.id
+            this.load_data = false
+            this.$fetch.api_user.deleteById(uid)
+              .then(() => {
                 this.get_table_data()
-                this.$message.success(msg)
+                this.$message.success("删除成功")
+              })
+              .catch(() => {
+              })
+          })
+          .catch(() => {
+          })
+      },
+      //单个恢复
+      recovery_data(item){
+        this.$confirm('此操作将恢复该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            let uid = item.id
+            this.load_data = false
+            this.$fetch.api_user.recoveryById(uid)
+              .then(() => {
+                this.get_table_data()
+                this.$message.success("恢复成功")
               })
               .catch(() => {
               })

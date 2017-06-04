@@ -13,7 +13,8 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from 'store'
+import store from '../store'
+import {SET_USER_INFO, SET_TOKEN_INFO} from '../store/actions/type'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -35,6 +36,10 @@ import sortTableComponent from 'pages/table/sort'
 import saveTableComponent from 'pages/table/save'
 //bar charts
 import barChartsComponent from 'pages/charts/bar'
+//file charts
+import fileChartsComponent from 'pages/charts/file'
+//update table
+import userModifyTableComponent from 'pages/table/modify'
 
 Vue.use(VueRouter)
 
@@ -68,7 +73,7 @@ const routes = [{
     name: 'tableBase',
     component: baseTableComponent,
     meta: {
-      title: "基本表格",
+      title: "所有用户",
       auth: true
     }
   }, {
@@ -76,15 +81,15 @@ const routes = [{
     name: 'tableSort',
     component: sortTableComponent,
     meta: {
-      title: "排序表格",
+      title: "暂时没有",
       auth: true
     }
   }, {
-    path: '/table/update/:id',
-    name: 'tableUpdate',
-    component: saveTableComponent,
+    path: '/table/modify/:id',
+    name: 'userTableModify',
+    component: userModifyTableComponent,
     meta: {
-      title: "数据修改",
+      title: "修改用户",
       auth: true
     }
   }, {
@@ -100,7 +105,15 @@ const routes = [{
     name: 'chartsBar',
     component: barChartsComponent,
     meta: {
-      title: "柱状图表",
+      title: "柱状图表(改为文件上传)",
+      auth: true
+    }
+  },{
+    path: '/charts/file',
+    name: 'chartsFile',
+    component: fileChartsComponent,
+    meta: {
+      title: "文件上传",
       auth: true
     }
   }]
@@ -117,33 +130,31 @@ const router = new VueRouter({
     }
   }
 })
+const clearInfo = function () {
+  store.dispatch(SET_USER_INFO, null);
+  store.dispatch(SET_TOKEN_INFO, null);
+};
 
-//全局路由配置
-//路由开始之前的操作
 router.beforeEach((to, from, next) => {
-  NProgress.done().start()
-  let toName = to.name
-  // let fromName = from.name
-  let is_login = store.state.user_info.login
-
-  if (!is_login && toName !== 'login') {
-    next({
-      name: 'login'
-    })
-  } else {
-    if (is_login && toName === 'login') {
-      next({
-        path: '/'
-      })
-    } else {
-      next()
+  if (to.matched.some(r => r.meta.auth)) {
+    let auth = store.state.User.id;
+    console.log(auth);
+    if (auth != null) {
+        next();
+      } else {
+        clearInfo();
+        next({
+          name: 'login'
+        });
     }
+  } else {
+    next();
   }
-})
+});
 
-//路由完成之后的操作
-router.afterEach(route => {
-  NProgress.done()
-})
+// //路由完成之后的操作
+// router.afterEach(route => {
+//   NProgress.done()
+// })
 
 export default router

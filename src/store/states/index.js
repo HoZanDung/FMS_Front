@@ -9,9 +9,10 @@
  *
  */
 
-import {cookieStorage} from 'common/storage'
+import {sessionStorage} from '../../common/storage/index.js'
 
 export default {
+  Token: sessionStorage.get('token_info'),
   //用户信息和是否登录
-  user_info: cookieStorage.get('user_info')
+  User: sessionStorage.get('user_info')
 }

@@ -10,6 +10,16 @@
  */
 
 //用户登录
-exports.login = "/api/post/user/login"
+exports.login = "/oauth/token"
 //用户登出
 exports.logout = "/api/post/user/logout"
+//创建用户
+exports.index = "/users/create"
+//获取当前登录用户信息
+exports.me = "/users/myself"
+//获取所有用户信息
+exports.list = "/users/index"
+//删除用户
+exports.delete = "/users"
+//恢复用户
+exports.recovery = "/users/recovery"

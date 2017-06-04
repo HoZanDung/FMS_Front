@@ -9,11 +9,14 @@
  *
  */
 
-import * as type from 'store/getters/type'
+import * as type from './type.js'
 
 export default {
+  [type.GET_TOKEN_INFO]: state => {
+    return state.Token
+  },
   //获取用户信息
   [type.GET_USER_INFO]: state => {
-    return state.user_info
+    return state.User
   }
 }
