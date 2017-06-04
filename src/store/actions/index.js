@@ -23,7 +23,7 @@ export default {
         var access = false;
         let privileges = userinfo.roles;
         for (var i in privileges) {
-          if (privileges[i].name == 'ROLE_ADMIN') {
+          if (privileges[i].name == 'ROLE_ADMIN' || privileges[i].name == 'ROLE_USER') {
             access = true;
           }
         }
