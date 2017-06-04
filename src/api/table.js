@@ -29,19 +29,17 @@ export function get(params) {
 }
 
 //根据id删除数据
-export function del(data) {
+export function deleteById(id) {
   return fetch({
-    url: port_table.del,
-    method: 'post',
-    data
+    url: port_table.del + "/" + id,
+    method: 'delete'
   })
 }
 //添加或修改数据
-export function save(data) {
+export function recoveryById(id) {
   return fetch({
-    url: port_table.save,
-    method: 'post',
-    data
+    url: port_table.save + "/" +id,
+    method: 'put'
   })
 }
 //批量删除
