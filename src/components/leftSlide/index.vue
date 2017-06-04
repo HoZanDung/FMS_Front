@@ -67,6 +67,9 @@
           child: [{
             title: "柱状图表(太好看没舍得删)",
             path: "/charts/bar"
+          },{
+              title:"文件上传",
+              path:"/charts/file"
           }]
         }]
       }
