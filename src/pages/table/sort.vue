@@ -5,7 +5,7 @@
         <i class="fa fa-refresh"></i>
       </el-button>
       <router-link :to="{name: 'tableAdd'}" tag="span">
-        <el-button type="primary" icon="plus" size="small">添加数据</el-button>
+        <el-button type="primary" icon="plus" size="small">添加数据sort.vue</el-button>
       </router-link>
     </panel-title>
     <div class="panel-body">
@@ -23,55 +23,44 @@
         <el-table-column
           prop="id"
           label="id"
-          width="80"
-          sortable>
+          width="50">
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="姓名"
-          width="120"
-          sortable>
+          prop="title"
+          label="标题"
+          width="80">
         </el-table-column>
         <el-table-column
-          prop="sex"
-          label="性别"
-          width="100"
-          sortable>
+          prop="status"
+          label="状态"
+          width="80">
+        </el-table-column>
+        <el-table-column type="expand">
           <template scope="props">
-            <span v-text="props.row.sex == 1 ? '男' : '女'"></span>
+            <el-form label-position="left" inline class="table-expand">
+              <el-form-item label="上 传 者">
+                <span>{{ props.row.create_by.username }}</span>
+              </el-form-item>
+              <el-form-item label="文件URI" style="width: 100%">
+                <span>{{props.row.file_path}}</span>
+              </el-form-item>
+              <el-form-item label="内容" style="width: 100%">
+                <span>{{props.row.content}}</span>
+              </el-form-item>
+            </el-form>
           </template>
         </el-table-column>
         <el-table-column
-          prop="age"
-          label="年龄"
-          width="100"
-          sortable>
-        </el-table-column>
-        <el-table-column
-          prop="birthday"
-          label="生日"
-          width="120"
-          sortable>
-        </el-table-column>
-        <el-table-column
-          prop="zip"
-          label="邮编"
-          width="120"
-          sortable>
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址"
-          sortable>
-        </el-table-column>
-        <el-table-column
           label="操作"
-          width="180">
+          width="250">
           <template scope="props">
-            <router-link :to="{name: 'tableUpdate', params: {id: props.row.id}}" tag="span">
+            <router-link :to="{name: 'userTableModify', params: {
+                id: props.row.id,
+                title:props.row.title}}" tag="span">
               <el-button type="info" size="small" icon="edit">修改</el-button>
             </router-link>
             <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row)">删除</el-button>
+            <el-button type="success" size="small" icon="delete" @click="recovery_data(props.row)">恢复</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -136,10 +125,10 @@
           page: this.currentPage,
           length: this.length
         })
-          .then(({data: {result, page, total}}) => {
-            this.table_data = result
-            this.currentPage = page
-            this.total = total
+          .then(({data: {data, metadata}}) => {
+            this.table_data = data
+            this.currentPage = metadata.pageInfo.CurrentPage
+            this.total = metadata.pageInfo.TotalPages
             this.load_data = false
           })
           .catch(() => {
@@ -154,11 +143,33 @@
           type: 'warning'
         })
           .then(() => {
-            this.load_data = true
-            this.$fetch.api_table.del(item)
-              .then(({msg}) => {
+            let uid = item.id
+            this.load_data = false
+            this.$fetch.api_table.deleteById(uid)
+              .then(() => {
                 this.get_table_data()
-                this.$message.success(msg)
+                this.$message.success("删除成功")
+              })
+              .catch(() => {
+              })
+          })
+          .catch(() => {
+          })
+      },
+      //单个恢复
+      recovery_data(item){
+        this.$confirm('此操作将恢复该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            let uid = item.id
+            this.load_data = false
+            this.$fetch.api_table.recoveryById(uid)
+              .then(() => {
+                this.get_table_data()
+                this.$message.success("恢复成功")
               })
               .catch(() => {
               })

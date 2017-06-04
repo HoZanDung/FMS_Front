@@ -11,12 +11,11 @@
 import fetch from 'common/fetch'
 import {port_table} from 'common/port_uri'
 
-//数据列表
-export function list(params) {
+//数据列表,获取所有文件信息
+export function list() {
   return fetch({
     url: port_table.list,
-    method: 'get',
-    params
+    method: 'get'
   })
 }
 

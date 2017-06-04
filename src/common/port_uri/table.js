@@ -10,7 +10,7 @@
  */
 
 //数据列表
-exports.list = "/api/get/table/list"
+exports.list = "/file/index"
 //根据id查询数据
 exports.get = "/api/get/table/get"
 //根据id删除数据
