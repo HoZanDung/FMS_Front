@@ -50,23 +50,26 @@
           path: "/home",
           icon: "fa-home"
         }, {
-          title: "表格管理",
+          title: "ADMIN管理",
           path: "/table",
           icon: "fa-table",
           child: [{
-            title: "基本表格",
+            title: "所有用户",
             path: "/table/base"
           }, {
-            title: "排序表格",
+            title: "所有文件",
             path: "/table/sort"
           }]
         }, {
-          title: "图表管理",
+          title: "USER管理",
           path: "/charts",
           icon: "fa-bar-chart-o",
           child: [{
-            title: "柱状图表",
+            title: "柱状图表(太好看没舍得删)",
             path: "/charts/bar"
+          },{
+              title:"文件上传",
+              path:"/charts/file"
           }]
         }]
       }
