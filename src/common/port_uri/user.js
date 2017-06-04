@@ -23,3 +23,5 @@ exports.list = "/users/index"
 exports.delete = "/users"
 //恢复用户
 exports.recovery = "/users/recovery"
+//更新用户
+exports.update = "/users"

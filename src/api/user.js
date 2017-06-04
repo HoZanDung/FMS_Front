@@ -73,6 +73,17 @@ export function recoveryById(id) {
   });
 }
 
+//修改用户的信息
+export function update(id, data) {
+  return fetch({
+    url: port_user.update + "/" + id,
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: qs.stringify(data)
+  });
+}
 
 
 //登出
