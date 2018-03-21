@@ -40,6 +40,11 @@ import barChartsComponent from 'pages/charts/bar'
 import fileChartsComponent from 'pages/charts/file'
 //update table
 import userModifyTableComponent from 'pages/table/modify'
+//
+import pullComponent from 'pages/home/pull'
+//药品信息基础页面
+import drugComponent from 'pages/drug/base'
+
 
 Vue.use(VueRouter)
 
@@ -56,6 +61,10 @@ const routes = [{
   path: '/user/login',
   name: 'login',
   component: loginComponent
+}, {
+  path: '/pull',
+  name: 'pull',
+  component: pullComponent
 }, {
   path: '/',
   redirect: '/home',
@@ -105,15 +114,23 @@ const routes = [{
     name: 'chartsBar',
     component: barChartsComponent,
     meta: {
-      title: "柱状图表(改为文件上传)",
+      title: "柱状图表",
       auth: true
     }
-  },{
+  }, {
     path: '/charts/file',
     name: 'chartsFile',
     component: fileChartsComponent,
     meta: {
       title: "文件上传",
+      auth: true
+    }
+  }, {
+    path: '/drug/base',
+    name: 'drugBase',
+    component: drugComponent,
+    meta: {
+      title: "药品信息列表",
       auth: true
     }
   }]
@@ -138,14 +155,14 @@ const clearInfo = function () {
 router.beforeEach((to, from, next) => {
   if (to.matched.some(r => r.meta.auth)) {
     let auth = store.state.User.id;
-    console.log(auth);
+    console.log("HoZanDung作品");
     if (auth != null) {
-        next();
-      } else {
-        clearInfo();
-        next({
-          name: 'login'
-        });
+      next();
+    } else {
+      clearInfo();
+      next({
+        name: 'login'
+      });
     }
   } else {
     next();

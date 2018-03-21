@@ -29,7 +29,6 @@ export default {
       sessionStorage.remove('token_info')
     } else {
       sessionStorage.set('token_info', tokeninfo)
-      console.log(tokeninfo)
     }
   }
 }

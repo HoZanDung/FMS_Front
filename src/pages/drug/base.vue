@@ -5,9 +5,10 @@
         <i class="fa fa-refresh"></i>
       </el-button>
       <router-link :to="{name: 'tableAdd'}" tag="span">
-        <el-button type="primary" icon="plus" size="small">添加数据sort.vue</el-button>
+        <el-button type="primary" icon="plus" size="small">添加数据</el-button>
       </router-link>
     </panel-title>
+    <h1>药品信息基础表</h1>
     <div class="panel-body">
       <el-table
         :data="table_data"
@@ -23,29 +24,81 @@
         <el-table-column
           prop="id"
           label="id"
-          width="50">
+          width="55">
         </el-table-column>
         <el-table-column
-          prop="title"
-          label="标题"
+          prop="name"
+          label="学名"
+          width="85">
+        </el-table-column>
+        <el-table-column
+          prop="type"
+          label="类型"
           width="80">
+        </el-table-column>
+        <el-table-column
+          prop="drugbar"
+          label="药品条形"
+          width="100">
+        </el-table-column>
+        <el-table-column
+          prop="genericName"
+          label="通用名字"
+          width="100">
+        </el-table-column>
+        <el-table-column
+          prop="pinyinCode"
+          label="拼音码"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="retailPrice"
+          label="零售价格"
+          width="100">
+        </el-table-column>
+        <el-table-column
+          prop="replenishPrice"
+          label="进货价格"
+          width="100">
         </el-table-column>
         <el-table-column
           prop="status"
-          label="状态"
-          width="80">
+          label="删除状态"
+          width="100">
         </el-table-column>
         <el-table-column type="expand">
           <template scope="props">
             <el-form label-position="left" inline class="table-expand">
-              <el-form-item label="上 传 者">
-                <span>{{ props.row.create_by.username }}</span>
+              <el-form-item label="药品单位">
+                <span>{{props.row.unit}}</span>
               </el-form-item>
-              <el-form-item label="文件URI" style="width: 100%">
-                <span><a :href = "props.row.file_path">{{props.row.file_path}}</a></span>
+              <br/>
+              <el-form-item label="剂量:">
+                <span>{{props.row.dosage}}</span>
               </el-form-item>
-              <el-form-item label="内容" style="width: 100%">
-                <span>{{props.row.content}}</span>
+              <br/>
+              <el-form-item label="药品产地:">
+                <span>{{props.row.origin}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="药品介绍:">
+                <span>{{props.row.introduce}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="时效性:">
+                <span>{{props.row.validity}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="质量标准:">
+                <span>{{props.row.qualityStandard}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="经营方式:">
+                <span>{{props.row.operation}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="批号:">
+                <span>{{props.row.batchNumber}}</span>
               </el-form-item>
             </el-form>
           </template>
@@ -56,8 +109,14 @@
           <template scope="props">
             <router-link :to="{name: 'userTableModify', params: {
                 id: props.row.id,
-                title:props.row.title}}" tag="span">
+                username:props.row.username,
+                password:props.row.password,
+                realname:props.row.realname,
+                email:props.row.email,
+                phone:props.row.phone,
+                address:props.row.address}}" tag="span">
               <el-button type="info" size="small" icon="edit">修改</el-button>
+              &nbsp;
             </router-link>
             <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row)">删除</el-button>
             <el-button type="success" size="small" icon="delete" @click="recovery_data(props.row)">恢复</el-button>
@@ -76,11 +135,13 @@
         </el-button>
         <div slot="page">
           <el-pagination
+            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
-            :page-size="10"
-            layout="total, prev, pager, next"
-            :total="total">
+            layout="total, sizes, prev, pager, next"
+            :total="total"
+            :page-sizes="[5,10,15]"
+            :page-size="pageSize">
           </el-pagination>
         </div>
       </bottom-tool-bar>
@@ -89,6 +150,7 @@
 </template>
 <script type="text/javascript">
   import {panelTitle, bottomToolBar} from 'components'
+  import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
 
   export default{
     data(){
@@ -99,18 +161,23 @@
         //数据总条目
         total: 0,
         //每页显示多少条数据
-        length: 15,
+        size: 5,
         //请求时的loading效果
         load_data: true,
         //批量选择数组
-        batch_select: []
+        batch_select: [],
+        //总分页
+        countPage: 0,
+        //每页显示条数,
+        pageSize: 0
       }
     },
     components: {
+      ElFormItem,
       panelTitle,
       bottomToolBar
     },
-    created(){
+    mounted(){
       this.get_table_data()
     },
     methods: {
@@ -121,15 +188,24 @@
       //获取数据
       get_table_data(){
         this.load_data = true
-        this.$fetch.api_table.list({
+        this.$fetch.api_drug.list({
           page: this.currentPage,
-          length: this.length
+          size: this.size
         })
-          .then(({data: {data, metadata}}) => {
-            this.table_data = data
-            this.currentPage = metadata.pageInfo.CurrentPage
-            this.total = metadata.pageInfo.TotalPages
+          .then(({data}) => {
+            this.table_data = data.data
+            this.currentPage = data.metadata.pageInfo.CurrentPage
+            this.total = data.metadata.pageInfo.TotalElements
+            this.countPage = data.metadata.pageInfo.TotalPages
+            this.pageSize = data.metadata.pageInfo.pageSize
             this.load_data = false
+            for (var i = 0; i < this.table_data.length; i++) {
+              if (this.table_data[i].status == "1") {
+                this.table_data[i].status = "正常"
+              } else {
+                this.table_data[i].status = "已删除"
+              }
+            }
           })
           .catch(() => {
             this.load_data = false
@@ -145,7 +221,7 @@
           .then(() => {
             let uid = item.id
             this.load_data = false
-            this.$fetch.api_table.deleteById(uid)
+            this.$fetch.api_user.deleteById(uid)
               .then(() => {
                 this.get_table_data()
                 this.$message.success("删除成功")
@@ -166,7 +242,7 @@
           .then(() => {
             let uid = item.id
             this.load_data = false
-            this.$fetch.api_table.recoveryById(uid)
+            this.$fetch.api_user.recoveryById(uid)
               .then(() => {
                 this.get_table_data()
                 this.$message.success("恢复成功")
@@ -180,6 +256,11 @@
       //页码选择
       handleCurrentChange(val) {
         this.currentPage = val
+        this.get_table_data()
+      },
+      //每页显示条数选择
+      handleSizeChange(val) {
+        this.size = val
         this.get_table_data()
       },
       //批量选择

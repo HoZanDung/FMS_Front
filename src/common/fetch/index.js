@@ -7,15 +7,13 @@
  * @Copyright(©) 2017 by zzmhot.
  *
  */
-
 //导入模块
-import axios from 'axios'
-import {port_code} from 'common/port_uri'
-import router from 'src/router'
-import {Message} from 'element-ui'
-import store from '../../store/index.js'
-import {SET_USER_INFO} from 'store/actions/type'
-import {server_base_url} from 'common/config'
+import axios from "axios";
+import {port_code} from "common/port_uri";
+import {Message} from "element-ui";
+import store from "../../store/index.js";
+import {SET_USER_INFO} from "store/actions/type";
+import {server_base_url} from "common/config";
 
 //设置用户信息action
 const setUserInfo = function (user) {

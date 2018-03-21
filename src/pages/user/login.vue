@@ -57,7 +57,6 @@
           this.$fetch.api_user.login(this.form)
             .then(({data}) => {
               if (data['access_token']) {
-                console.log(data)
                 this.set_token_info(data);
                 this.$fetch.api_user.me()
                   .then(({data}) => {

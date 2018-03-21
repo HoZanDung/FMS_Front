@@ -65,12 +65,16 @@
           path: "/charts",
           icon: "fa-bar-chart-o",
           child: [{
-            title: "柱状图表(太好看没舍得删)",
+            title: "柱状图表",
             path: "/charts/bar"
-          },{
-              title:"文件上传",
-              path:"/charts/file"
+          }, {
+            title: "文件上传",
+            path: "/charts/file"
           }]
+        }, {
+          title: "药品信息管理",
+          path:"/drug/base",
+          icon:"fa-table",
         }]
       }
     }
