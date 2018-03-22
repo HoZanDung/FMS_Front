@@ -44,6 +44,8 @@ import userModifyTableComponent from 'pages/table/modify'
 import pullComponent from 'pages/home/pull'
 //药品信息基础页面
 import drugComponent from 'pages/drug/base'
+//药品修改页面
+import drugModify from 'pages/drug/modify'
 
 
 Vue.use(VueRouter)
@@ -131,6 +133,14 @@ const routes = [{
     component: drugComponent,
     meta: {
       title: "药品信息列表",
+      auth: true
+    }
+  }, {
+    path: '/drug/modify',
+    name: 'drugTableModify',
+    component: drugModify,
+    meta: {
+      title: "修改药品信息",
       auth: true
     }
   }]

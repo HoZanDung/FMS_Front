@@ -22,3 +22,31 @@ export function list(data) {
     data: qs.stringify(data)
   })
 }
+
+//删除ID为id的药品
+export function deleteById(id) {
+  return fetch({
+    url: port_drug.delete + "/" + id,
+    method: 'delete'
+  })
+}
+
+//恢复ID为id的药品
+export function recoveryById(id) {
+  return fetch({
+    url: port_drug.recovery + "/" + id,
+    method: 'put'
+  });
+}
+
+//修改药品的信息
+export function update(id, data) {
+  return fetch({
+    url: port_drug.update + "/" + id,
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: qs.stringify(data)
+  });
+}

@@ -107,14 +107,23 @@
           label="操作"
           width="250">
           <template scope="props">
-            <router-link :to="{name: 'userTableModify', params: {
+            <router-link :to="{name: 'drugTableModify', params: {
                 id: props.row.id,
-                username:props.row.username,
-                password:props.row.password,
-                realname:props.row.realname,
-                email:props.row.email,
-                phone:props.row.phone,
-                address:props.row.address}}" tag="span">
+                name:props.row.name,
+                type:props.row.type,
+                introduce:props.row.introduce,
+                drugbar:props.row.drugbar,
+                genericName:props.row.genericName,
+                pinyinCode:props.row.pinyinCode,
+                retailPrice:props.row.retailPrice,
+                replenishPrice:props.row.replenishPrice,
+                unit:props.row.unit,
+                dosage:props.row.dosage,
+                origin:props.row.origin,
+                validity:props.row.validity,
+                qualityStandard:props.row.qualityStandard,
+                operation:props.row.operation,
+                batchNumber:props.row.batchNumber}}" tag="span">
               <el-button type="info" size="small" icon="edit">修改</el-button>
               &nbsp;
             </router-link>
@@ -221,7 +230,7 @@
           .then(() => {
             let uid = item.id
             this.load_data = false
-            this.$fetch.api_user.deleteById(uid)
+            this.$fetch.api_drug.deleteById(uid)
               .then(() => {
                 this.get_table_data()
                 this.$message.success("删除成功")
@@ -242,7 +251,7 @@
           .then(() => {
             let uid = item.id
             this.load_data = false
-            this.$fetch.api_user.recoveryById(uid)
+            this.$fetch.api_drug.recoveryById(uid)
               .then(() => {
                 this.get_table_data()
                 this.$message.success("恢复成功")
