@@ -16,6 +16,9 @@
         element-loading-text="拼命加载中"
         border
         @selection-change="on_batch_select"
+        :stripe="true"
+        :highlight-current-row="true"
+        :border="true"
         style="width: 100%;">
         <el-table-column
           type="selection"
@@ -38,18 +41,15 @@
         </el-table-column>
         <el-table-column
           prop="drugbar"
-          label="药品条形"
-          width="100">
+          label="药品条形">
         </el-table-column>
         <el-table-column
           prop="genericName"
-          label="通用名字"
-          width="100">
+          label="通用名字">
         </el-table-column>
         <el-table-column
           prop="pinyinCode"
-          label="拼音码"
-          width="80">
+          label="拼音码">
         </el-table-column>
         <el-table-column
           prop="retailPrice"

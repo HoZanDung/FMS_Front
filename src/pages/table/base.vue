@@ -148,9 +148,9 @@
         })
           .then(({data: {data, metadata}}) => {
             var newData = []
-            for(var item of data){
-                item.roles = item.roles[0].description
-                newData.push(item)
+            for (var item of data) {
+              item.roles = item.roles[0].description
+              newData.push(item)
             }
             this.table_data = newData
             this.currentPage = metadata.pageInfo.CurrentPage

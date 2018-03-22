@@ -1,10 +1,10 @@
 <template>
-  <div class="menu-right" v-if="get_user_info.login">
+  <div class="menu-right" v-if="true">
     <div class="notification-menu">
       <el-dropdown trigger="click" class="notification-list">
         <div class="notification-btn">
-          <img :src="get_user_info.user.avatar" :alt="get_user_info.user.name"/>
-          <span v-text="get_user_info.user.name"></span>
+          <span v-text="get_user_info.username"></span>
+          <span v-text="get_user_info.realname"></span>
           <span class="icon"></span>
         </div>
         <el-dropdown-menu slot="dropdown" class="dropdown-menu">
@@ -57,12 +57,9 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$fetch.api_user.logout()
-            .then(({msg}) => {
-              this.$message.success(msg)
-              this.set_user_info(null)
-              setTimeout(this.$router.replace({name: "login"}), 500)
-            })
+          this.$message.success(msg)
+          this.set_user_info(null)
+          setTimeout(this.$router.replace({name: "login"}), 500)
         }).catch(() => {
 
         })
