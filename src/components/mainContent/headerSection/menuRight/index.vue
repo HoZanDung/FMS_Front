@@ -21,10 +21,9 @@
             </a>
           </el-dropdown-item>
           <el-dropdown-item class="dropdown-list">
-            <a href="javascript:" class="dropdown-btn" @click="user_click(0)">
-              <i class="icon fa fa-sign-out"></i>
-              <span>安全退出</span>
-            </a>
+            <router-link :to="{name:'login'}" tag="span">
+              <el-button type="info" size="small" icon="delete">安全退出</el-button>
+            </router-link>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
