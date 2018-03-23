@@ -9,6 +9,90 @@
       </router-link>
     </panel-title>
     <h1>药品信息基础表</h1>
+    <!--搜索栏-->
+    <el-row class="search_row" style="margin-left: 5px;">
+      <el-col :span="1">&nbsp;</el-col>
+      <el-row>
+        <el-col :span="2">
+          <el-input placeholder="输入名字搜索" v-model="searchData.name" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输入类型搜索" v-model="searchData.type" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输入介绍搜索" v-model="searchData.introduce" class="inputForm"></el-input>
+        </el-col>
+      </el-row>
+      <br/>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-row>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输入条形搜索" v-model="searchData.drugbar" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输通用名搜索" v-model="searchData.genericName" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输拼音码搜索" v-model="searchData.pinyinCode" class="inputForm"></el-input>
+        </el-col>
+      </el-row>
+      <br/>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-row>
+        <el-col :span="2" class="text">
+          <el-input placeholder="零售价格搜索" v-model="searchData.retailPrice" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="进货价格搜索" v-model="searchData.replenishPrice" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="药品单位搜索" v-model="searchData.unit" class="inputForm"></el-input>
+        </el-col>
+      </el-row>
+      <br/>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-row>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输入剂量搜索" v-model="searchData.dosage" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输入产地搜索" v-model="searchData.origin" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输时效性搜索" v-model="searchData.validity" class="inputForm"></el-input>
+        </el-col>
+      </el-row>
+      <br/>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-row>
+        <el-col :span="2" class="text">
+          <el-input placeholder="质量标准搜索" v-model="searchData.qualityStandard" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="经营方式搜索" v-model="searchData.operation" class="inputForm"></el-input>
+        </el-col>
+        <el-col :span="2" class="text">
+          <el-input placeholder="输入批号搜索" v-model="searchData.batchNumber" class="inputForm"></el-input>
+        </el-col>
+      </el-row>
+      <br/>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="7" class="text" style="float: right;padding-right: 5px">
+        <el-button type="primary" @click="handleReset" icon="circle-cross" class="button" style="margin: 0">重置
+        </el-button>
+        <el-button type="primary" @click="handleSearch" icon="search" class="button">搜索</el-button>
+      </el-col>
+    </el-row>
     <div class="panel-body">
       <el-table
         :data="table_data"
@@ -160,6 +244,7 @@
 <script type="text/javascript">
   import {panelTitle, bottomToolBar} from 'components'
   import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
+  import ElRow from "element-ui/packages/row/src/row";
 
   export default{
     data(){
@@ -178,10 +263,28 @@
         //总分页
         countPage: 0,
         //每页显示条数,
-        pageSize: 0
+        pageSize: 0,
+        searchData: {
+          name: '',
+          type: '',
+          introduce: '',
+          drugbar: '',
+          genericName: '',
+          pinyinCode: '',
+          retailPrice: '',
+          replenishPrice: '',
+          unit: '',
+          dosage: '',
+          origin: '',
+          validity: '',
+          qualityStandard: '',
+          operation: '',
+          batchNumber: ''
+        }
       }
     },
     components: {
+      ElRow,
       ElFormItem,
       panelTitle,
       bottomToolBar
@@ -294,6 +397,66 @@
               })
           })
           .catch(() => {
+          })
+      },
+      //重置搜索
+      handleReset() {
+        this.searchData = {
+          name: '',
+          type: '',
+          introduce: '',
+          drugbar: '',
+          genericName: '',
+          pinyinCode: '',
+          retailPrice: '',
+          replenishPrice: '',
+          unit: '',
+          dosage: '',
+          origin: '',
+          validity: '',
+          qualityStandard: '',
+          operation: '',
+          batchNumber: ''
+        }
+      },
+      //处理搜索
+      handleSearch() {
+        this.load_data = true
+        this.$fetch.api_drug.search({
+          page: this.currentPage,
+          size: this.size,
+          name: this.searchData.name,
+          type: this.searchData.type,
+          introduce: this.searchData.introduce,
+          drugbar: this.searchData.drugbar,
+          genericName: this.searchData.genericName,
+          pinyinCode: this.searchData.pinyinCode,
+          retailPrice: this.searchData.retailPrice,
+          replenishPrice: this.searchData.replenishPrice,
+          unit: this.searchData.unit,
+          dosage: this.searchData.dosage,
+          origin: this.searchData.origin,
+          validity: this.searchData.validity,
+          qualityStandard: this.searchData.qualityStandard,
+          operation: this.searchData.operation,
+          batchNumber: this.searchData.batchNumber
+        }).then(({data}) => {
+          this.table_data = data.data
+          this.currentPage = data.metadata.pageInfo.CurrentPage
+          this.total = data.metadata.pageInfo.TotalElements
+          this.countPage = data.metadata.pageInfo.TotalPages
+          this.pageSize = data.metadata.pageInfo.pageSize
+          this.load_data = false
+          for (var i = 0; i < this.table_data.length; i++) {
+            if (this.table_data[i].status == "1") {
+              this.table_data[i].status = "正常"
+            } else {
+              this.table_data[i].status = "已删除"
+            }
+          }
+        })
+          .catch(() => {
+            this.load_data = false
           })
       }
     }

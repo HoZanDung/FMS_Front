@@ -9,3 +9,5 @@ exports.delete = "/drug"
 exports.recovery = "/drug/recovery"
 //更新药品信息
 exports.update = "/drug"
+//搜索药品信息
+exports.search = "/drug/findTest"

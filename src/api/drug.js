@@ -50,3 +50,15 @@ export function update(id, data) {
     data: qs.stringify(data)
   });
 }
+
+//搜索药品信息
+export function search(data) {
+  return fetch({
+    url: port_drug.search,
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: qs.stringify(data)
+  })
+}
