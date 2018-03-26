@@ -1,4 +1,6 @@
-
+/**
+ * Created by HOZANDUNG on 18/3/26.
+ */
 //查找所有药品信息
 exports.index = "/drug/index"
 //添加药品信息

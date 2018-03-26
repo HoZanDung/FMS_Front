@@ -46,6 +46,12 @@ import pullComponent from 'pages/home/pull'
 import drugComponent from 'pages/drug/base'
 //药品修改页面
 import drugModify from 'pages/drug/modify'
+//供应商信息基础页面
+import supplierComponent from 'pages/supplier/base'
+//供应商信息添加页面
+import saveSupplierComponent from 'pages/supplier/save'
+//供应商信息修改页面
+import supplierModify from 'pages/supplier/modify'
 
 
 Vue.use(VueRouter)
@@ -141,6 +147,30 @@ const routes = [{
     component: drugModify,
     meta: {
       title: "修改药品信息",
+      auth: true
+    }
+  }, {
+    path: '/supplier/base',
+    name: 'supplierBase',
+    component: supplierComponent,
+    meta: {
+      title: "供应商信息列表",
+      auth: true
+    }
+  }, {
+    path: '/supplier/save',
+    name: 'supplierAdd',
+    component: saveSupplierComponent,
+    meta: {
+      title: "添加供应商信息",
+      auth: true
+    }
+  }, {
+    path: '/supplier/modify',
+    name: 'supplierTableModify',
+    component: supplierModify,
+    meta: {
+      title: "修改供应商信息",
       auth: true
     }
   }]

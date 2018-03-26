@@ -73,8 +73,12 @@
           }]
         }, {
           title: "药品信息管理",
-          path:"/drug/base",
-          icon:"fa-table",
+          path: "/drug/base",
+          icon: "fa-table",
+        }, {
+          title: "供应商信息管理",
+          path: "/supplier/base",
+          icon: "fa-table"
         }]
       }
     }

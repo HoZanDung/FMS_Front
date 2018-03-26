@@ -14,11 +14,13 @@ const port_user = require("./user")
 const port_table = require("./table")
 const port_file = require("./file")
 const port_drug = require("./drug")
+const port_supplier = require("./supplier")
 
 module.exports = {
   port_code,
   port_user,
   port_table,
   port_file,
-  port_drug
+  port_drug,
+  port_supplier
 }
