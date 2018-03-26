@@ -79,6 +79,10 @@
           title: "供应商信息管理",
           path: "/supplier/base",
           icon: "fa-table"
+        }, {
+          title: "库存管理信息总表",
+          path: "/storageMain/base",
+          icon: "fa-bar-chart-o"
         }]
       }
     }

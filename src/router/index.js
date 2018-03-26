@@ -52,6 +52,12 @@ import supplierComponent from 'pages/supplier/base'
 import saveSupplierComponent from 'pages/supplier/save'
 //供应商信息修改页面
 import supplierModify from 'pages/supplier/modify'
+//库存管理总信息页面
+import baseStorageMainComponent from 'pages/storageMain/base'
+//库存管理总信息新增页面
+import saveStorageMainComponent from 'pages/storageMain/save'
+//库存管理总信息编辑页面
+import storageMainModifyComponent from 'pages/storageMain/modify'
 
 
 Vue.use(VueRouter)
@@ -171,6 +177,30 @@ const routes = [{
     component: supplierModify,
     meta: {
       title: "修改供应商信息",
+      auth: true
+    }
+  }, {
+    path: '/storageMain/base',
+    name: 'storageMainBase',
+    component: baseStorageMainComponent,
+    meta: {
+      title: "库存信息总表信息",
+      auth: true
+    }
+  }, {
+    path: '/storageMain/save',
+    name: 'storageMainAdd',
+    component: saveStorageMainComponent,
+    meta: {
+      title: "库存信息总表新增",
+      auth: true
+    }
+  }, {
+    path: '/storageMain/modify',
+    name: 'storageMainModify',
+    component: storageMainModifyComponent,
+    meta: {
+      title: "库存信息总表编辑",
       auth: true
     }
   }]

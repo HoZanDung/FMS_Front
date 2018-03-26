@@ -14,13 +14,15 @@ import * as api_table from './table'
 import * as api_user from './user'
 import * as api_drug from './drug'
 import * as api_supplier from './supplier'
+import * as api_storageMain from './storageMain'
 
 const apiObj = {
   api_file,
   api_table,
   api_user,
   api_drug,
-  api_supplier
+  api_supplier,
+  api_storageMain
 }
 
 const install = function (Vue) {
