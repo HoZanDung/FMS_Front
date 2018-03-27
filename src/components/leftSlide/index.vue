@@ -72,23 +72,23 @@
             path: "/charts/file"
           }]
         }, {
-          title: "药品信息管理",
+          title: "药品信息模块",
           path: "/drug/base",
           icon: "fa-table",
         }, {
-          title: "供应商信息管理",
+          title: "供应商模块",
           path: "/supplier/base",
           icon: "fa-table"
         }, {
-          title: "库存管理信息总表",
+          title: "库存管理模块",
           path: "/storageMain/base",
           icon: "fa-bar-chart-o"
         }, {
-          title: "库存细节信息总表",
+          title: "库存细节模块",
           path: "/storageDetail/base",
           icon: "fa-bar-chart-o"
         }, {
-          title: "销售信息列表",
+          title: "销售模块",
           path: "/sellDetail/base",
           icon: "fa-table"
         }]
