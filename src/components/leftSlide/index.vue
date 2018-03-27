@@ -83,6 +83,10 @@
           title: "库存管理信息总表",
           path: "/storageMain/base",
           icon: "fa-bar-chart-o"
+        }, {
+          title: "库存细节信息总表",
+          path: "/storageDetail/base",
+          icon: "fa-bar-chart-o"
         }]
       }
     }

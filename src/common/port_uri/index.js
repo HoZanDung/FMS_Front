@@ -1,11 +1,11 @@
 /**
- * Created by zzmhot on 2017/3/24.
+ * Created by HoZanDung on 2017/3/24.
  *
- * @author: zzmhot
- * @github: https://github.com/zzmhot
- * @email: zzmhot@163.com
+ * @author: HoZanDung
+ * @github: https://github.com/HoZanDung
+ * @email: 522060647@qq.com
  * @Date: 2017/3/24 14:56
- * @Copyright(©) 2017 by zzmhot.
+ * @Copyright(©) 2017 by HoZanDung.
  *
  */
 
@@ -16,10 +16,11 @@ const port_file = require("./file")
 const port_drug = require("./drug")
 const port_supplier = require("./supplier")
 const port_storageMain = require("./storageMain")
+const port_storageDetail = require("./storageDetail")
 
 module.exports = {
   port_code, port_user,
   port_table, port_file,
   port_drug, port_supplier,
-  port_storageMain
+  port_storageMain, port_storageDetail
 }
