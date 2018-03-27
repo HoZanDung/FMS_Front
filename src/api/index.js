@@ -16,6 +16,7 @@ import * as api_drug from './drug'
 import * as api_supplier from './supplier'
 import * as api_storageMain from './storageMain'
 import * as api_storageDetail from './storageDetail'
+import * as api_sellDetail from './sellDetail'
 
 const apiObj = {
   api_file,
@@ -24,7 +25,8 @@ const apiObj = {
   api_drug,
   api_supplier,
   api_storageMain,
-  api_storageDetail
+  api_storageDetail,
+  api_sellDetail
 }
 
 const install = function (Vue) {

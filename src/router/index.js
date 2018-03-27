@@ -64,6 +64,12 @@ import baseStorageDetailComponent from 'pages/storageDetail/base'
 import saveStorageDetailComponent from 'pages/storageDetail/save'
 //库存管理细节表编辑页面
 import storageDetailModifyComponent from 'pages/storageDetail/modify'
+//销售列表基础表
+import baseSellDetailComponent from 'pages/sellDetail/base'
+//销售保存
+import saveSellDetailComponent from 'pages/sellDetail/save'
+//销售编辑
+import sellDetailModifyComponent from 'pages/sellDetail/modify'
 
 
 Vue.use(VueRouter)
@@ -231,6 +237,30 @@ const routes = [{
     component: storageDetailModifyComponent,
     meta: {
       title: "库存细节编辑",
+      auth: true
+    }
+  }, {
+    path: '/sellDetail/base',
+    name: 'sellDetailBase',
+    component: baseSellDetailComponent,
+    meta: {
+      title: "销售列表",
+      auth: true
+    }
+  }, {
+    path: '/sellDetail/save',
+    name: 'sellDetailAdd',
+    component: saveSellDetailComponent,
+    meta: {
+      title: "销售新增",
+      auth: true
+    }
+  }, {
+    path: '/sellDetail/modify',
+    name: 'sellDetailModify',
+    component: sellDetailModifyComponent,
+    meta: {
+      title: "销售编辑",
       auth: true
     }
   }]

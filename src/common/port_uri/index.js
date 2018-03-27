@@ -17,10 +17,12 @@ const port_drug = require("./drug")
 const port_supplier = require("./supplier")
 const port_storageMain = require("./storageMain")
 const port_storageDetail = require("./storageDetail")
+const port_sellDetail = require("./sellDetail")
 
 module.exports = {
   port_code, port_user,
   port_table, port_file,
   port_drug, port_supplier,
-  port_storageMain, port_storageDetail
+  port_storageMain, port_storageDetail,
+  port_sellDetail
 }
