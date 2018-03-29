@@ -55,6 +55,14 @@
         <el-table-column type="expand">
           <template scope="props">
             <el-form label-position="left" inline class="table-expand">
+              <el-form-item label="联系人:">
+                <span>{{props.row.pinyinCode}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="联系电话:">
+                <span>{{props.row.phone}}</span>
+              </el-form-item>
+              <br/>
               <el-form-item label="供应商地址:">
                 <span>{{props.row.address}}</span>
               </el-form-item>

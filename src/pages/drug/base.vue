@@ -115,8 +115,7 @@
         </el-table-column>
         <el-table-column
           prop="name"
-          label="学名"
-          width="85">
+          label="学名">
         </el-table-column>
         <el-table-column
           prop="type"
@@ -265,21 +264,21 @@
         //每页显示条数,
         pageSize: 0,
         searchData: {
-          name: '',
-          type: '',
-          introduce: '',
-          drugbar: '',
-          genericName: '',
-          pinyinCode: '',
-          retailPrice: '',
-          replenishPrice: '',
-          unit: '',
-          dosage: '',
-          origin: '',
-          validity: '',
-          qualityStandard: '',
-          operation: '',
-          batchNumber: ''
+          name:'',
+          type:'',
+          introduce:'',
+          drugbar:'',
+          genericName:'',
+          pinyinCode:'',
+          retailPrice:'',
+          replenishPrice:'',
+          unit:'',
+          dosage:'',
+          origin:'',
+          validity:'',
+          qualityStandard:'',
+          operation:'',
+          batchNumber:''
         }
       }
     },

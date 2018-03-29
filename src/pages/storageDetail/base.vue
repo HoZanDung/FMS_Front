@@ -44,10 +44,6 @@
           width="100">
         </el-table-column>
         <el-table-column
-          prop="storageDate"
-          label="入库日期">
-        </el-table-column>
-        <el-table-column
           prop="storageAmounting"
           label="库存数量"
           width="150">
@@ -71,6 +67,10 @@
               <br/>
               <el-form-item label="入库总金额:">
                 <span>{{props.row.storageAllPrice}}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="入库日期:">
+                <span>{{props.row.storageDate}}</span>
               </el-form-item>
             </el-form>
           </template>
